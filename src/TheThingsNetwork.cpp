@@ -625,6 +625,19 @@ void TheThingsNetwork::showStatus()
   debugPrintIndex(SHOW_RX_DELAY_2, buffer);
 }
 
+size_t maxMessageSize() {
+  size_t read = readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer));
+  if (read!=2) {
+    return 0; // Error reading DR
+  }
+  else if (buffer[0]<'0' || buffer[0]>'4') {
+    return 0; // Invalid DR
+  }
+  static size_t US915_sizes[] = {11, 53, 125, 242};
+  size_t dr = buffer[0] - '0';
+  return US915_sizes[dr];
+}
+
 void TheThingsNetwork::configureEU868()
 {
   sendMacSet(MAC_RX2, "3 869525000");

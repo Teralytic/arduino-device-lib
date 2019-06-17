@@ -94,6 +94,7 @@ public:
   void reset(bool adr = true);
   void resetHard(uint8_t resetPin);
   void showStatus();
+  size_t maxMessageSize();
   size_t getHardwareEui(char *buffer, size_t size);
   size_t getAppEui(char *buffer, size_t size);
   uint16_t getVDD();
